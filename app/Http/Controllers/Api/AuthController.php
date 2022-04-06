@@ -2,9 +2,10 @@
 
 namespace App\Http\Controllers\Api;
 
-use App\Http\Controllers\Controller;
+use App\Http\Controllers\Api\BaseController as Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
+use Symfony\Component\HttpFoundation\Response;
 
 class AuthController extends Controller
 {
@@ -15,20 +16,24 @@ class AuthController extends Controller
             'password' => 'required|string|min:6'
         ]);
         if ($validator->fails()) {
-            return response()->json($validator->errors(), 422);
+            return $this->error(
+                'Unprocessable Entity',
+                Response::HTTP_UNPROCESSABLE_ENTITY,
+                $validator->errors()->getMessages()
+            );
         }
 
         if (! auth()->attempt($validator->validated())) {
-            return response()->json(['error' => 'Unauthorized'], 401);
+            return $this->error('Unauthorized', Response::HTTP_UNAUTHORIZED);
         }
         $user = auth()->user();
         $token = $user->createToken('api');
 
-        return [
+        return $this->success([
             'access_token' => $token->plainTextToken,
             'token_type' => 'bearer',
-            'expires_in' => 60, // TODO:: fill right expire time
-        ];
+            // 'expires_in' => 60, // TODO:: fill right expire time
+        ]);
     }
 
     public function logout()
@@ -40,13 +45,13 @@ class AuthController extends Controller
 
         // $user->currentAccessToken()->delete();;
 
-        return response()->json(['message' => 'User successfully signed out']);
+        return $this->successMessage('User successfully signed out');
     }
 
     public function userProfile()
     {
         $user = auth()->user();
 
-        return response()->json($user);
+        return $this->success($user);
     }
 }
