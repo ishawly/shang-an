@@ -32,3 +32,5 @@ Route::controller(UserController::class)
 
     });
 
+Route::middleware(['auth:sanctum'])
+    ->apiResource('activities', \App\Http\Controllers\Api\ActivityController::class);
