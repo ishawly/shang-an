@@ -22,7 +22,7 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 
 Route::prefix('auth')
     ->group( function () {
-        Route::post('/login', [AuthController::class, 'login']);
+        Route::post('/login', [AuthController::class, 'login'])->name('api.auth.login');
         Route::middleware('auth:sanctum')->post('/logout', [AuthController::class, 'logout']);
         Route::middleware('auth:sanctum')->get('/user-profile', [AuthController::class, 'userProfile']);
     });
@@ -34,3 +34,7 @@ Route::controller(UserController::class)
 
 Route::middleware(['auth:sanctum'])
     ->apiResource('activities', \App\Http\Controllers\Api\ActivityController::class);
+
+Route::middleware(['auth:sanctum'])
+    ->apiResource('topics', \App\Http\Controllers\Api\TopicController::class)
+    ->except(['destroy']);
