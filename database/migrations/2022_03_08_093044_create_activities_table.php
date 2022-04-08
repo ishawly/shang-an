@@ -21,6 +21,7 @@ return new class extends Migration
             $table->dateTime('end_at');
             $table->unsignedInteger('participant_num')->nullable(false)->default(0);
             $table->string('remarks', 500)->nullable(false)->default('');
+            $table->softDeletes();
             $table->timestamps();
         });
     }

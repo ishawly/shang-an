@@ -18,6 +18,7 @@ return new class extends Migration
             $table->bigInteger('activity_id')->nullable(false)->default(0);
             $table->bigInteger('user_id')->nullable(false)->default(0);
             $table->string('remarks', 500)->nullable(false)->default('');
+            $table->softDeletes();
             $table->timestamps();
         });
     }
