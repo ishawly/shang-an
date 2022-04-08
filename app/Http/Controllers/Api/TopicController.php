@@ -5,6 +5,8 @@ namespace App\Http\Controllers\Api;
 use App\Http\Controllers\Api\BaseController as Controller;
 use App\Http\Requests\StoreTopicRequest;
 use App\Http\Requests\UpdateTopicRequest;
+use App\Http\Resources\TopicCollection;
+use App\Http\Resources\TopicResource;
 use App\Models\Topic;
 use Illuminate\Http\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -15,7 +17,7 @@ class TopicController extends Controller
     {
         $topics = Topic::query()->paginate();
 
-        return $this->success($topics);
+        return $this->success(new TopicCollection($topics));
     }
 
     public function store(StoreTopicRequest $request)
@@ -31,7 +33,7 @@ class TopicController extends Controller
         $data = array_merge($validated, ['created_by' => $userId]);
         $topic = Topic::query()->create($data);
 
-        return $this->success($topic);
+        return $this->success(new TopicResource($topic));
     }
 
     public function show(Topic $topic)
