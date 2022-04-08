@@ -25,7 +25,7 @@ class StoreTopicRequest extends FormRequest
     {
         return [
             'topic_name' => 'required|max:200',
-            'remarks' => 'sometimes|nullable|max:500'
+            'remarks' => 'sometimes|max:500'
         ];
     }
 

@@ -37,4 +37,4 @@ Route::middleware(['auth:sanctum'])
 
 Route::middleware(['auth:sanctum'])
     ->apiResource('topics', \App\Http\Controllers\Api\TopicController::class)
-    ->except(['destroy']);
+    ->except(['edit']);
