@@ -8,6 +8,13 @@ use Illuminate\Http\Resources\Json\JsonResource;
 class TopicResource extends JsonResource
 {
     /**
+     * eg User::all()->keyBy->id
+     *
+     * @var bool
+     */
+    public $preserveKeys = false;
+
+    /**
      * Transform the resource into an array.
      *
      * @param  \Illuminate\Http\Request  $request
