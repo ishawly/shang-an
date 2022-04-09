@@ -40,14 +40,22 @@ class TopicController extends Controller
         return $this->success(new TopicResource($topic));
     }
 
-    public function show(Topic $topic)
+    public function show(Topic $topic, Request $request)
     {
-        //
+        $userId = $request->user()->id;
+        if ($topic->created_by != $userId) {
+            return $this->error('需主题创建人执行该操作', Response::HTTP_UNPROCESSABLE_ENTITY);
+        }
+
+        return $this->success(new TopicResource($topic));
     }
 
     public function update(UpdateTopicRequest $request, Topic $topic)
     {
-        //
+        $data = $request->safe()->only(['topic_name', 'remarks']);
+        $topic->update($data);
+
+        return $this->success(new TopicResource($topic));
     }
 
     public function destroy(Topic $topic, Request $request)

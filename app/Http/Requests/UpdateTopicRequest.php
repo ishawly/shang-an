@@ -2,29 +2,28 @@
 
 namespace App\Http\Requests;
 
-use Illuminate\Foundation\Http\FormRequest;
-
-class UpdateTopicRequest extends FormRequest
+class UpdateTopicRequest extends StoreTopicRequest
 {
-    /**
-     * Determine if the user is authorized to make this request.
-     *
-     * @return bool
-     */
     public function authorize()
     {
-        return false;
+        return $this->topic->created_by == $this->user()->id;
     }
 
-    /**
-     * Get the validation rules that apply to the request.
-     *
-     * @return array
-     */
     public function rules()
     {
-        return [
-            //
+        $topicName = $this->topic->topic_name;
+
+        $rules = parent::rules();
+        $rules['topic_name'] = [
+            'required',
+            'max:200',
+            function ($attribute, $value, $fail) use ($topicName) {
+                if ($topicName == $value) {
+                    $fail( '主题名称: ' . $value .'已存在');
+                }
+            }
         ];
+
+        return $rules;
     }
 }
