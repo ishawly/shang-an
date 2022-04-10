@@ -2,6 +2,8 @@
 
 namespace App\Http\Requests;
 
+use App\Models\Topic;
+
 class UpdateTopicRequest extends StoreTopicRequest
 {
     public function authorize()
@@ -11,14 +13,17 @@ class UpdateTopicRequest extends StoreTopicRequest
 
     public function rules()
     {
-        $topicName = $this->topic->topic_name;
+        $createdBy = $this->user()->id;
 
         $rules = parent::rules();
         $rules['topic_name'] = [
             'required',
             'max:200',
-            function ($attribute, $value, $fail) use ($topicName) {
-                if ($topicName == $value) {
+            function ($attribute, $value, $fail) use ($createdBy) {
+                $topic = Topic::query()->where('created_by', $createdBy)
+                    ->where('topic_name', $value)
+                    ->first();
+                if ($topic) {
                     $fail( '主题名称: ' . $value .'已存在');
                 }
             }

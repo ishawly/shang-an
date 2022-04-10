@@ -2,6 +2,7 @@
 
 namespace App\Http\Requests;
 
+use App\Rules\UniqueTopicName;
 use Illuminate\Foundation\Http\FormRequest;
 
 class StoreTopicRequest extends FormRequest
@@ -23,8 +24,14 @@ class StoreTopicRequest extends FormRequest
      */
     public function rules()
     {
+        $createdBy = $this->user()->id;
+
         return [
-            'topic_name' => 'required|max:200',
+            'topic_name' => [
+                'required',
+                'max:200',
+                new UniqueTopicName($createdBy)
+            ],
             'remarks' => 'sometimes|max:500'
         ];
     }
