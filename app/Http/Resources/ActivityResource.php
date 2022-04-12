@@ -2,15 +2,8 @@
 
 namespace App\Http\Resources;
 
-class TopicResource extends Resource
+class ActivityResource extends Resource
 {
-    /**
-     * eg User::all()->keyBy->id
-     *
-     * @var bool
-     */
-    public $preserveKeys = false;
-
     /**
      * Transform the resource into an array.
      *
@@ -21,10 +14,13 @@ class TopicResource extends Resource
     {
         return [
             'id' => $this->id,
-            'topic_name' => $this->topic_name,
-            'remarks' => $this->remarks,
+            'topic_id' => $this->topic_id,
             'created_by' => $this->created_by,
-            'created_at' => $this->getDateTimeStr($this->created_at),
+            'start_at' => $this->getDateTimeStr($this->start_at),
+            'end_at' => $this->getDateTimeStr($this->end_at),
+            'participant_num' => (int) $this->participant_num,
+            'remarks' => $this->remarks ?: '',
+            'created_at'=> $this->getDateTimeStr($this->created_at),
             'updated_at' => $this->getDateTimeStr($this->updated_at),
         ];
     }

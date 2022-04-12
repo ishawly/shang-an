@@ -59,7 +59,7 @@ class StoreTopicRequest extends FormRequest
         return [
             'topic_name.required' => ':attribute不能为空',
             'topic_name.max' => ':attribute长度不能超过:max',
-            'remarks.max' => ':attribute长度不能超过500',
+            'remarks.max' => ':attribute长度不能超过:max',
         ];
     }
 
