@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Api;
 use App\Http\Controllers\Api\BaseController  as Controller;
 use App\Http\Requests\StoreActivityRequest;
 use App\Http\Requests\UpdateActivityRequest;
+use App\Http\Resources\ActivityCollection;
 use App\Http\Resources\ActivityResource;
 use App\Models\Activity;
 use Illuminate\Http\Request;
@@ -13,9 +14,14 @@ class ActivityController extends Controller
 {
     public function index(Request $request)
     {
-        $page = Activity::query()->paginate();
+        $size = $this->getQueryPageSize($request);
+        $userId = $request->user()->id;
 
-        return $this->success($page);
+        $data = Activity::query()
+            ->where('created_by', $userId)
+            ->paginate($size);
+
+        return $this->success(new ActivityCollection($data));
     }
 
     public function store(StoreActivityRequest $request)

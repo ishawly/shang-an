@@ -22,9 +22,7 @@ class TopicCollection extends ResourceCollection
      */
     public function toArray($request)
     {
-        // return parent::toArray($request);
         return [
-//            'data' => TopicResource::collection($this->collection),
             'data' => $this->collection,
             'meta' => [
                 'total' => $this->resource->total(),

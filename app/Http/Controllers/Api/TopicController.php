@@ -15,8 +15,7 @@ class TopicController extends Controller
 {
     public function index(Request $request)
     {
-        $size = $request->get('size',self::PAGE_SIZE);
-        $size <= 0 and $size = self::PAGE_SIZE;
+        $size = $this->getQueryPageSize($request);
 
         $topics = Topic::query()->paginate($size);
         $data = new TopicCollection($topics);
