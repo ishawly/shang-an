@@ -9,6 +9,7 @@ use App\Http\Resources\ActivityCollection;
 use App\Http\Resources\ActivityResource;
 use App\Models\Activity;
 use Illuminate\Http\Request;
+use Symfony\Component\HttpFoundation\Response;
 
 class ActivityController extends Controller
 {
@@ -36,16 +37,30 @@ class ActivityController extends Controller
 
     public function show(Activity $activity)
     {
-        //
+        return $this->success(new ActivityResource($activity));
     }
 
     public function update(UpdateActivityRequest $request, Activity $activity)
     {
-        //
+        $data = $request->safe([
+            'start_at',
+            'end_at',
+            'remarks',
+        ]);
+
+        $activity->update($data);
+
+        return $this->success(new ActivityResource($activity));
     }
 
-    public function destroy(Activity $activity)
+    public function destroy(Activity $activity, Request $request)
     {
-        //
+        $userId = $request->user()->id;
+        if ($activity->created_by != $userId) {
+            return $this->error('需活动创建人执行该操作', Response::HTTP_FORBIDDEN);
+        }
+        $activity->delete();
+
+        return $this->successNoContent();
     }
 }

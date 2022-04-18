@@ -24,7 +24,7 @@ class StoreActivityRequest extends FormRequest
     public function rules()
     {
         return [
-            'topic_id' => 'required|',
+            'topic_id' => 'required',
             'start_at' => 'required|date',
             'end_at' => 'required|date|after:start_at',
             'remarks' => 'sometimes|string|max:500'

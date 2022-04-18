@@ -2,29 +2,19 @@
 
 namespace App\Http\Requests;
 
-use Illuminate\Foundation\Http\FormRequest;
-
-class UpdateActivityRequest extends FormRequest
+class UpdateActivityRequest extends StoreActivityRequest
 {
-    /**
-     * Determine if the user is authorized to make this request.
-     *
-     * @return bool
-     */
     public function authorize()
     {
-        return false;
+        return $this->activity->created_by == $this->user()->id;
     }
 
-    /**
-     * Get the validation rules that apply to the request.
-     *
-     * @return array
-     */
     public function rules()
     {
         return [
-            //
+            'start_at' => 'required|date',
+            'end_at' => 'required|date|after:start_at',
+            'remarks' => 'sometimes|string|max:500'
         ];
     }
 }

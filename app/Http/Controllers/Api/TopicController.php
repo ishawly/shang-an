@@ -61,7 +61,7 @@ class TopicController extends Controller
     {
         $userId = $request->user()->id;
         if ($topic->created_by != $userId) {
-            return $this->error('需主题创建人执行该操作', Response::HTTP_UNPROCESSABLE_ENTITY);
+            return $this->error('需主题创建人执行该操作', Response::HTTP_FORBIDDEN);
         }
         $topic->delete();
 

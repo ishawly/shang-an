@@ -24,11 +24,16 @@ trait ApiResponse
         return $this->success(null, $message);
     }
 
+    public function successNoContent()
+    {
+        return \response()->json()->setStatusCode(Response::HTTP_NO_CONTENT);
+    }
+
     public function error($message, ?int $httpCode, $data = null): JsonResponse
     {
         $statusCode = $httpCode && $httpCode >= Response::HTTP_BAD_REQUEST && $httpCode < 600
             ? $httpCode : Response::HTTP_BAD_REQUEST;
-        return response()->json([
+        return \response()->json([
             'code' => $httpCode ?: self::$CODE_ERR,
             'message' => $message,
             'data' => $data,
