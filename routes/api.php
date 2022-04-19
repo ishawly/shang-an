@@ -33,8 +33,13 @@ Route::controller(UserController::class)
     });
 
 Route::middleware(['auth:sanctum'])
+    ->apiResource('topics', \App\Http\Controllers\Api\TopicController::class)
+    ->except(['edit']);
+
+Route::middleware(['auth:sanctum'])
     ->apiResource('activities', \App\Http\Controllers\Api\ActivityController::class);
 
 Route::middleware(['auth:sanctum'])
-    ->apiResource('topics', \App\Http\Controllers\Api\TopicController::class)
-    ->except(['edit']);
+    ->apiResource('activities.participants', \App\Http\Controllers\Api\ParticipantController::class)
+    ->scoped()
+    ->except(['index']);

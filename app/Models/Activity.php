@@ -21,4 +21,9 @@ class Activity extends Model
         'start_at' => 'datetime',
         'end_at' => 'datetime',
     ];
+
+    public function participants()
+    {
+        return $this->hasMany(Participant::class);
+    }
 }
