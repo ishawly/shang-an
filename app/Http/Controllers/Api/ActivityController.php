@@ -13,6 +13,11 @@ use Symfony\Component\HttpFoundation\Response;
 
 class ActivityController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('activity.store.check.count')->only('store');
+    }
+
     public function index(Request $request)
     {
         $size = $this->getQueryPageSize($request);
