@@ -65,6 +65,6 @@ class TopicController extends Controller
         }
         $topic->delete();
 
-        return $this->successMessage('ok');
+        return $this->successNoContent();
     }
 }
