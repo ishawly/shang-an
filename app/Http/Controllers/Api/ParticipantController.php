@@ -15,7 +15,7 @@ class ParticipantController extends Controller
 {
     public function store(StoreParticipantRequest $request, Activity $activity)
     {
-        $participant = Participant::query()->firstOrNew([
+        $participant = Participant::firstOrNew([
             'activity_id' => $activity->id,
             'user_id' => $request->user()->id,
         ]);
