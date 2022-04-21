@@ -2,6 +2,8 @@
 
 namespace App\Providers;
 
+use App\Events\ActivityParticipant\ActivityParticipantCancelled;
+use App\Listeners\ActivityParticipant\SendCancelNotification;
 use Illuminate\Auth\Events\Registered;
 use Illuminate\Auth\Listeners\SendEmailVerificationNotification;
 use Illuminate\Foundation\Support\Providers\EventServiceProvider as ServiceProvider;
@@ -18,6 +20,12 @@ class EventServiceProvider extends ServiceProvider
         Registered::class => [
             SendEmailVerificationNotification::class,
         ],
+        'App\Events\ActivityParticipant\ActivityParticipated' => [
+            'App\Listeners\ActivityParticipant\SendParticipateNotification',
+        ],
+        ActivityParticipantCancelled::class => [
+            SendCancelNotification::class,
+        ]
     ];
 
     /**

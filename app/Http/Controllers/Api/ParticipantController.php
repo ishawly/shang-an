@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers\Api;
 
+use App\Events\ActivityParticipant\ActivityParticipantCancelled;
+use App\Events\ActivityParticipant\ActivityParticipated;
 use App\Http\Controllers\Api\BaseController as Controller;
 use App\Http\Requests\StoreParticipantRequest;
 use App\Http\Requests\UpdateParticipantRequest;
@@ -20,6 +22,7 @@ class ParticipantController extends Controller
             'user_id' => $request->user()->id,
         ]);
 
+        // create then send notification via model event dispatch
         return $this->update($request, $activity, $participant);
     }
 
@@ -46,6 +49,7 @@ class ParticipantController extends Controller
 
         $participant->delete();
 
+        // delete then send notification via model event dispatch
         return $this->successNoContent();
     }
 }
