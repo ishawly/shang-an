@@ -16,10 +16,10 @@ class AuthTest extends TestCase
 
     public function test_auth_login()
     {
-        $user = $this->getAnApiUser();
+        $user        = $this->getAnApiUser();
         $credentials = [
-            "email" => $user->email,
-            "password" => 'password',
+            'email'    => $user->email,
+            'password' => 'password',
         ];
 
         $response = $this->postJson($this->baseUrl . '/login', $credentials);
@@ -30,7 +30,7 @@ class AuthTest extends TestCase
                 'code' => 0,
                 'data' => [
                     'token_type' => 'bearer',
-                ]
+                ],
             ]);
         $response->assertJsonStructure([
             'code',
@@ -38,14 +38,13 @@ class AuthTest extends TestCase
             'data' => [
                 'access_token',
                 'token_type',
-            ]
+            ],
         ]);
         $response->assertJson(
-            fn (AssertableJson $json) =>
-                $json->whereType('code', 'integer')
+            fn (AssertableJson $json) => $json->whereType('code', 'integer')
                     ->whereType('message', 'string|null')
                     ->whereAllType([
-                        'data' => 'array',
+                        'data'              => 'array',
                         'data.access_token' => ['string'],
                     ])
         );
@@ -64,14 +63,14 @@ class AuthTest extends TestCase
                 'id',
                 'name',
                 'email',
-            ]
+            ],
         ]);
         $response->assertJson(function (AssertableJson $json) {
             $json->whereType('data', 'array')
                 ->has('data', function (AssertableJson $json) {
                     $json->whereAllType([
-                        'id' => 'integer',
-                        'name' => 'string',
+                        'id'    => 'integer',
+                        'name'  => 'string',
                         'email' => 'string',
                     ])
                     ->etc();

@@ -25,7 +25,7 @@ class EventServiceProvider extends ServiceProvider
         ],
         ActivityParticipantCancelled::class => [
             SendCancelNotification::class,
-        ]
+        ],
     ];
 
     /**
@@ -35,7 +35,6 @@ class EventServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        //
     }
 
     /**

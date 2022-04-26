@@ -20,7 +20,7 @@ class ActivityController extends Controller
 
     public function index(Request $request)
     {
-        $size = $this->getQueryPageSize($request);
+        $size   = $this->getQueryPageSize($request);
         $userId = $request->user()->id;
 
         $data = Activity::query()
@@ -32,10 +32,10 @@ class ActivityController extends Controller
 
     public function store(StoreActivityRequest $request)
     {
-        $userId = $request->user()->id;
-        $data = $request->validated();
+        $userId             = $request->user()->id;
+        $data               = $request->validated();
         $data['created_by'] = $userId;
-        $activity = Activity::create($data);
+        $activity           = Activity::create($data);
 
         return $this->success(new ActivityResource($activity));
     }

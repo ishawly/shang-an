@@ -12,8 +12,8 @@ class AuthController extends Controller
     public function login(Request $request)
     {
         $validator = Validator::make($request->all(), [
-            'email' => 'required|email',
-            'password' => 'required|string|min:6'
+            'email'    => 'required|email',
+            'password' => 'required|string|min:6',
         ]);
         if ($validator->fails()) {
             return $this->error(
@@ -23,15 +23,15 @@ class AuthController extends Controller
             );
         }
 
-        if (! auth()->attempt($validator->validated())) {
+        if (!auth()->attempt($validator->validated())) {
             return $this->error('Unauthorized', Response::HTTP_UNAUTHORIZED);
         }
-        $user = auth()->user();
+        $user  = auth()->user();
         $token = $user->createToken('api');
 
         return $this->success([
             'access_token' => $token->plainTextToken,
-            'token_type' => 'bearer',
+            'token_type'   => 'bearer',
             // 'expires_in' => 60, // TODO:: fill right expire time
         ]);
     }

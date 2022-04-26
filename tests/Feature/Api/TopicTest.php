@@ -35,13 +35,11 @@ class TopicTest extends TestCase
                 'meta' => [
                     'total',
                 ],
-            ]
+            ],
         ]);
-        $response->assertJson(fn (AssertableJson $json) =>
-            $json->whereType('data.data', 'array')
+        $response->assertJson(fn (AssertableJson $json) => $json->whereType('data.data', 'array')
                 ->whereType('data.meta.total', 'integer')
-                ->has('data.data.0', fn ($json) =>
-                $json->whereType('id', 'integer')
+                ->has('data.data.0', fn ($json) => $json->whereType('id', 'integer')
                     ->whereType('topic_name', 'string')
                     ->etc()
             )->etc()
@@ -51,11 +49,11 @@ class TopicTest extends TestCase
     public function test_store_a_topic()
     {
         $topicName = $this->faker->text(80);
-        $remarks = $this->faker->text(500);
+        $remarks   = $this->faker->text(500);
 
         $response = $this->postJson($this->url, [
             'topic_name' => $topicName,
-            'remarks' => $remarks,
+            'remarks'    => $remarks,
         ]);
 
         $response->assertSuccessful();
@@ -65,7 +63,7 @@ class TopicTest extends TestCase
 
     public function test_show_topic()
     {
-        $user = $this->getAnApiUser();
+        $user  = $this->getAnApiUser();
         $topic = Topic::firstWhere([
             'created_by' => $user->id,
         ]);
@@ -75,22 +73,22 @@ class TopicTest extends TestCase
         $response->assertJson([
             'data' => [
                 'topic_name' => $topic->topic_name,
-                'remarks' => $topic->remarks,
+                'remarks'    => $topic->remarks,
                 'created_by' => $user->id,
-            ]
+            ],
         ]);
     }
 
     public function test_update_topic()
     {
-        $user = $this->getAnApiUser();
+        $user  = $this->getAnApiUser();
         $topic = Topic::firstWhere([
             'created_by' => $user->id,
         ]);
 
         $postData = [
             'topic_name' => $this->faker->text(80),
-            'remarks' => $this->faker->text(500),
+            'remarks'    => $this->faker->text(500),
         ];
         $response = $this->patchJson($this->url . '/' . $topic->id, $postData);
         $response->assertOk();
@@ -99,7 +97,7 @@ class TopicTest extends TestCase
 
     public function test_delete_topic()
     {
-        $user = $this->getAnApiUser();
+        $user  = $this->getAnApiUser();
         $topic = Topic::firstWhere([
             'created_by' => $user->id,
         ]);

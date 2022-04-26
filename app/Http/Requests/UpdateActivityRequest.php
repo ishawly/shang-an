@@ -13,8 +13,8 @@ class UpdateActivityRequest extends StoreActivityRequest
     {
         return [
             'start_at' => 'required|date',
-            'end_at' => 'required|date|after:start_at',
-            'remarks' => 'sometimes|string|max:500'
+            'end_at'   => 'required|date|after:start_at',
+            'remarks'  => 'sometimes|string|max:500',
         ];
     }
 }

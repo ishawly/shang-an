@@ -30,9 +30,9 @@ class StoreTopicRequest extends FormRequest
             'topic_name' => [
                 'required',
                 'max:200',
-                new UniqueTopicName($createdBy)
+                new UniqueTopicName($createdBy),
             ],
-            'remarks' => 'sometimes|max:500'
+            'remarks' => 'sometimes|max:500',
         ];
     }
 
@@ -58,8 +58,8 @@ class StoreTopicRequest extends FormRequest
     {
         return [
             'topic_name.required' => ':attribute不能为空',
-            'topic_name.max' => ':attribute长度不能超过:max',
-            'remarks.max' => ':attribute长度不能超过:max',
+            'topic_name.max'      => ':attribute长度不能超过:max',
+            'remarks.max'         => ':attribute长度不能超过:max',
         ];
     }
 

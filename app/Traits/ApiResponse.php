@@ -7,15 +7,15 @@ use Symfony\Component\HttpFoundation\Response;
 
 trait ApiResponse
 {
-    private static int $CODE_OK = 0;
+    private static int $CODE_OK  = 0;
     private static int $CODE_ERR = 1;
 
     public function success($data, $message = 'ok'): JsonResponse
     {
         return response()->json([
-            'code' => self::$CODE_OK,
+            'code'    => self::$CODE_OK,
             'message' => $message,
-            'data' => $data,
+            'data'    => $data,
         ]);
     }
 
@@ -33,10 +33,11 @@ trait ApiResponse
     {
         $statusCode = $httpCode && $httpCode >= Response::HTTP_BAD_REQUEST && $httpCode < 600
             ? $httpCode : Response::HTTP_BAD_REQUEST;
+
         return \response()->json([
-            'code' => $httpCode ?: self::$CODE_ERR,
+            'code'    => $httpCode ?: self::$CODE_ERR,
             'message' => $message,
-            'data' => $data,
+            'data'    => $data,
         ])->setStatusCode($statusCode);
     }
 }

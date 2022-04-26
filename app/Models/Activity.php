@@ -20,7 +20,7 @@ class Activity extends Model
 
     protected $casts = [
         'start_at' => 'datetime',
-        'end_at' => 'datetime',
+        'end_at'   => 'datetime',
     ];
 
     public function participants()

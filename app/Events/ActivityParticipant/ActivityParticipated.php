@@ -17,6 +17,7 @@ class ActivityParticipated
     use Dispatchable, InteractsWithSockets, SerializesModels;
 
     public Participant $participant;
+
     /**
      * Create a new event instance.
      *

@@ -18,22 +18,22 @@ class TopicController extends Controller
         $size = $this->getQueryPageSize($request);
 
         $topics = Topic::query()->paginate($size);
-        $data = new TopicCollection($topics);
-//return $data;
+        $data   = new TopicCollection($topics);
+        // return $data;
         return $this->success($data);
     }
 
     public function store(StoreTopicRequest $request)
     {
         $validated = $request->validated();
-        $userId = $request->user()->id;
-        $topic = Topic::query()->where('topic_name', $validated['topic_name'])
+        $userId    = $request->user()->id;
+        $topic     = Topic::query()->where('topic_name', $validated['topic_name'])
             ->where('created_by', $userId)->first();
         if ($topic) {
             return $this->error("{$validated['topic_name']}主题已存在", Response::HTTP_UNPROCESSABLE_ENTITY);
         }
 
-        $data = array_merge($validated, ['created_by' => $userId]);
+        $data  = array_merge($validated, ['created_by' => $userId]);
         $topic = Topic::query()->create($data);
 
         return $this->success(new TopicResource($topic));

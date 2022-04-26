@@ -24,8 +24,9 @@ class UniqueTopicName implements Rule, DataAwareRule, ValidatorAwareRule
     /**
      * Determine if the validation rule passes.
      *
-     * @param  string  $attribute
-     * @param  mixed  $value
+     * @param string $attribute
+     * @param mixed  $value
+     *
      * @return bool
      */
     public function passes($attribute, $value)
@@ -34,7 +35,7 @@ class UniqueTopicName implements Rule, DataAwareRule, ValidatorAwareRule
             ->where('topic_name', $value)
             ->first();
 
-        return ! $topic;
+        return !$topic;
     }
 
     /**
@@ -48,7 +49,7 @@ class UniqueTopicName implements Rule, DataAwareRule, ValidatorAwareRule
     }
 
     /**
-     * custom validation rule class needs to access all of the other data undergoing validation
+     * custom validation rule class needs to access all of the other data undergoing validation.
      */
     protected $data = [];
 
@@ -59,9 +60,8 @@ class UniqueTopicName implements Rule, DataAwareRule, ValidatorAwareRule
         return $this;
     }
 
-
     /**
-     * access to the validator instance performing the validation
+     * access to the validator instance performing the validation.
      */
     protected $validator;
 

@@ -2,8 +2,8 @@
 
 namespace App\Http\Middleware;
 
-use App\Models\Activity;
 use App\Contracts\ShangAn;
+use App\Models\Activity;
 use Carbon\Carbon;
 use Closure;
 use Illuminate\Http\Request;
@@ -16,11 +16,11 @@ class CheckActivityCreatedCountToday
         if (empty($request->user() || empty($request->user()->id))) {
             abort(Response::HTTP_UNAUTHORIZED, '请先登陆');
         }
-        $userId = $request->user()->id;
-        $now = Carbon::now();
+        $userId   = $request->user()->id;
+        $now      = Carbon::now();
         $dateFrom = $now->format('Y-m-d 00:00:00');
-        $dateTo = $now->format('Y-m-d 23:59:59');
-        $count = Activity::query()->where('created_by', $userId)
+        $dateTo   = $now->format('Y-m-d 23:59:59');
+        $count    = Activity::query()->where('created_by', $userId)
             ->whereBetween('created_at', [$dateFrom, $dateTo])
             ->count();
         if (ShangAn::ACTIVITY_CREATE_MAX_COUNT_TODAY < $count) {

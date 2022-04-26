@@ -14,7 +14,7 @@ class UpdateParticipantRequest extends FormRequest
     public function rules()
     {
         return [
-            'remarks' => 'sometimes|max:500'
+            'remarks' => 'sometimes|max:500',
         ];
     }
 

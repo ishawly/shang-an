@@ -13,6 +13,6 @@ class Topic extends Model
     protected $fillable = [
         'topic_name',
         'remarks',
-        'created_by'
+        'created_by',
     ];
 }

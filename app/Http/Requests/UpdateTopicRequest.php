@@ -15,7 +15,7 @@ class UpdateTopicRequest extends StoreTopicRequest
     {
         $createdBy = $this->user()->id;
 
-        $rules = parent::rules();
+        $rules               = parent::rules();
         $rules['topic_name'] = [
             'required',
             'max:200',
@@ -24,9 +24,9 @@ class UpdateTopicRequest extends StoreTopicRequest
                     ->where('topic_name', $value)
                     ->first();
                 if ($topic) {
-                    $fail( '主题名称: ' . $value .'已存在');
+                    $fail('主题名称: ' . $value . '已存在');
                 }
-            }
+            },
         ];
 
         return $rules;

@@ -24,11 +24,11 @@ class UserSeeder extends Seeder
             ->create();
         */
         User::query()->firstOrCreate([
-            'name' => 'chen sheng',
-            'email' => 'liber@shawly.cn',
+            'name'              => 'chen sheng',
+            'email'             => 'liber@shawly.cn',
             'email_verified_at' => Carbon::now(),
-            //'password'=> Hash::make('123456'),
-            'password'=> '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', // password,
+            // 'password'=> Hash::make('123456'),
+            'password' => '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', // password,
         ]);
     }
 }

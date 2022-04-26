@@ -11,12 +11,10 @@ class SendCancelNotification
 {
     public function __construct()
     {
-        //
     }
 
     public function handle(ActivityParticipantCancelled $event)
     {
-        Log::info("用户取消加入活动", $event->participant->toArray());
-
+        Log::info('用户取消加入活动', $event->participant->toArray());
     }
 }

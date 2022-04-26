@@ -19,7 +19,7 @@ class ParticipantController extends Controller
     {
         $participant = Participant::firstOrNew([
             'activity_id' => $activity->id,
-            'user_id' => $request->user()->id,
+            'user_id'     => $request->user()->id,
         ]);
 
         // create then send notification via model event dispatch

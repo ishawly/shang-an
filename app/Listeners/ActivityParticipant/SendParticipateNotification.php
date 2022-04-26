@@ -16,18 +16,18 @@ class SendParticipateNotification
      */
     public function __construct()
     {
-        //
     }
 
     /**
      * Handle the event.
      *
      * @param ActivityParticipated $event
+     *
      * @return void
      */
     public function handle(ActivityParticipated $event)
     {
-        Log::info("用户加入到活动中来", $event->participant->toArray());
+        Log::info('用户加入到活动中来', $event->participant->toArray());
 
         // TODO::send wechat notification
     }
