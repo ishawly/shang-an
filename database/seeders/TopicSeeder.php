@@ -2,9 +2,11 @@
 
 namespace Database\Seeders;
 
+use App\Models\Topic;
 use Carbon\Carbon;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
+use Illuminate\Foundation\Testing\WithFaker;
 use Illuminate\Support\Facades\DB;
 
 class TopicSeeder extends Seeder
@@ -29,5 +31,7 @@ class TopicSeeder extends Seeder
                 'updated_at' => Carbon::now(),
             ]);
         }
+
+        Topic::factory(10)->create();
     }
 }
