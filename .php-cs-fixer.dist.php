@@ -2,7 +2,6 @@
 
 $finder = PhpCsFixer\Finder::create()
     ->exclude('bootstrap')
-    ->exclude('config')
     ->exclude('database')
     ->exclude('public')
     ->exclude('resources')

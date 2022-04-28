@@ -188,6 +188,6 @@ return [
     */
 
     'aliases' => Facade::defaultAliases()->merge([
-        // ...
+        'EasyWeChat' => Overtrue\LaravelWeChat\EasyWeChat::class,
     ])->toArray(),
 ];
