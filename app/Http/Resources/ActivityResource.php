@@ -20,6 +20,7 @@ class ActivityResource extends Resource
             'start_at'        => $this->getDateTimeStr($this->start_at),
             'end_at'          => $this->getDateTimeStr($this->end_at),
             'participant_num' => (int) $this->participant_num,
+            'participants'    => ParticipantResource::collection($this->whenLoaded('participants')),
             'remarks'         => $this->remarks ?: '',
             'created_at'      => $this->getDateTimeStr($this->created_at),
             'updated_at'      => $this->getDateTimeStr($this->updated_at),

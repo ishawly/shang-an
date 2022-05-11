@@ -35,6 +35,10 @@ Route::middleware(['auth:sanctum'])
     ->apiResource('topics', \App\Http\Controllers\Api\TopicController::class)
     ->except(['edit']);
 
+Route::middleware(['auth:sanctum'])->get('/activities/today', [
+    \App\Http\Controllers\Api\ActivityController::class,
+    'getTodayActivity',
+]);
 Route::middleware(['auth:sanctum'])
     ->apiResource('activities', \App\Http\Controllers\Api\ActivityController::class);
 

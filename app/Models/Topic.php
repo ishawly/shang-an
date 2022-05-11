@@ -15,4 +15,6 @@ class Topic extends Model
         'remarks',
         'created_by',
     ];
+
+    public const ID_STUDY_TOGETHER = 1;
 }

@@ -8,6 +8,8 @@ use App\Http\Requests\UpdateActivityRequest;
 use App\Http\Resources\ActivityCollection;
 use App\Http\Resources\ActivityResource;
 use App\Models\Activity;
+use App\Models\Topic;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Symfony\Component\HttpFoundation\Response;
 
@@ -67,5 +69,14 @@ class ActivityController extends Controller
         $activity->delete();
 
         return $this->successNoContent();
+    }
+
+    public function getTodayActivity(Request $request)
+    {
+        $activity = Activity::with(['participants'])->where('topic_id', Topic::ID_STUDY_TOGETHER)
+            ->whereBetween('start_at', [Carbon::today(), Carbon::tomorrow()])
+            ->firstOrFail();
+
+        return $this->success(new ActivityResource($activity));
     }
 }

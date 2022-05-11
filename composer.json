@@ -49,7 +49,7 @@
             "@php artisan key:generate --ansi"
         ],
         "cs-fix": [
-            "./vendor/bin/php-cs-fixer fix --using-cache=no --allow-risky=yes --ansi -v"
+            "./vendor/bin/php-cs-fixer fix --using-cache=no --allow-risky=yes --ansi"
         ],
         "cs-diff": "./vendor/bin/php-cs-fixer fix --using-cache=no --diff --dry-run --allow-risky=yes --ansi"
     },
