@@ -9,6 +9,7 @@ use App\Http\Resources\ActivityCollection;
 use App\Http\Resources\ActivityResource;
 use App\Models\Activity;
 use App\Models\Topic;
+use App\Services\ActivityService;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -71,11 +72,15 @@ class ActivityController extends Controller
         return $this->successNoContent();
     }
 
-    public function getTodayActivity(Request $request)
+    public function getTodayActivity(ActivityService $activityService)
     {
-        $activity = Activity::with(['participants'])->where('topic_id', Topic::ID_STUDY_TOGETHER)
-            ->whereBetween('start_at', [Carbon::today(), Carbon::tomorrow()])
-            ->firstOrFail();
+        $activity = $activityService->getDailyActivity();
+
+        if (!$activity) {
+            return $this->error('未创建每日活动', Response::HTTP_NOT_FOUND);
+        }
+
+        $activity->load(['participants']);
 
         return $this->success(new ActivityResource($activity));
     }
