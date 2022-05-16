@@ -80,7 +80,7 @@ class ActivityController extends Controller
             return $this->error('未创建每日活动', Response::HTTP_NOT_FOUND);
         }
 
-        $activity->load(['participants']);
+        $activity->load(['participants', 'topic', 'participants.user']);
 
         return $this->success(new ActivityResource($activity));
     }

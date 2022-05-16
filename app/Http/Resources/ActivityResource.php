@@ -16,6 +16,7 @@ class ActivityResource extends Resource
         return [
             'id'              => $this->id,
             'topic_id'        => $this->topic_id,
+            'topic'           => new TopicResource($this->whenLoaded('topic')),
             'created_by'      => $this->created_by,
             'start_at'        => $this->getDateTimeStr($this->start_at),
             'end_at'          => $this->getDateTimeStr($this->end_at),

@@ -31,4 +31,11 @@ class UpdateParticipantRequest extends FormRequest
             'remarks' => '备注',
         ];
     }
+
+    protected function prepareForValidation()
+    {
+        $this->merge([
+            'remarks' => $this->remarks ?: '',
+        ]);
+    }
 }

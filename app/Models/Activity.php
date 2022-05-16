@@ -27,4 +27,9 @@ class Activity extends Model
     {
         return $this->hasMany(Participant::class);
     }
+
+    public function topic()
+    {
+        return $this->belongsTo(Topic::class, 'topic_id', 'id');
+    }
 }
