@@ -84,4 +84,19 @@ class ActivityController extends Controller
 
         return $this->success(new ActivityResource($activity));
     }
+
+    public function getUserParticipated(Request $request)
+    {
+        $userId = $request->user()->id;
+        $size   = $this->getQueryPageSize($request);
+
+        $activities = Activity::query()->with(['topic'])
+            ->whereHas('participants', function ($builder) use ($userId) {
+                $builder->where('user_id', $userId);
+            })
+            ->orderBy('id', 'desc')
+            ->paginate($size);
+
+        return $this->success(new ActivityCollection($activities));
+    }
 }

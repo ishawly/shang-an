@@ -1,6 +1,9 @@
 <?php
 
+use App\Http\Controllers\Api\ActivityController;
 use App\Http\Controllers\Api\AuthController;
+use App\Http\Controllers\Api\ParticipantController;
+use App\Http\Controllers\Api\TopicController;
 use App\Http\Controllers\Api\UserController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -32,17 +35,18 @@ Route::controller(UserController::class)
     });
 
 Route::middleware(['auth:sanctum'])
-    ->apiResource('topics', \App\Http\Controllers\Api\TopicController::class)
+    ->apiResource('topics', TopicController::class)
     ->except(['edit']);
 
-Route::middleware(['auth:sanctum'])->get('/activities/today', [
-    \App\Http\Controllers\Api\ActivityController::class,
-    'getTodayActivity',
-]);
 Route::middleware(['auth:sanctum'])
-    ->apiResource('activities', \App\Http\Controllers\Api\ActivityController::class);
+    ->group(function () {
+        Route::get('/activities/today', [ActivityController::class, 'getTodayActivity']);
+        Route::get('/activities/user-participated', [ActivityController::class, 'getUserParticipated']);
+    });
+Route::middleware(['auth:sanctum'])
+    ->apiResource('activities', ActivityController::class);
 
 Route::middleware(['auth:sanctum'])
-    ->apiResource('activities.participants', \App\Http\Controllers\Api\ParticipantController::class)
+    ->apiResource('activities.participants', ParticipantController::class)
     ->scoped()
     ->except(['index']);
