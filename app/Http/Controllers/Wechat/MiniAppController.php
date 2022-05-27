@@ -43,10 +43,12 @@ class MiniAppController extends BaseController
                 'session_key' => $data['session_key'],
             ]);
             if (empty($thirdApp->user_id)) {
-                $user = User::create([
-                    'name'     => '',
-                    'email'    => md5($data['openid']) . '@shang-an.shawly.cn',
-                    'password' => '',
+                $md5openid = md5($data['openid']);
+                $user      = User::create([
+                    'name'       => 'u_' . substr($md5openid, 0, 16),
+                    'avatar_url' => User::AVATAR_URL_DEF_WECHAT,
+                    'email'      => $md5openid . '@shang-an.shawly.cn',
+                    'password'   => '',
                 ]);
                 $thirdApp->user_id = $user->id;
                 $thirdApp->update();
